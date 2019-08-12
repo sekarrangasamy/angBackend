@@ -6,7 +6,7 @@ var fileupload = require('express-fileupload');
 const json2csv = require('json2csv').parse;
 const fs = require('fs');
 const path = require('path');
-
+const port = process.env.PORT || 3000;
 var app = express();
 app.use(fileupload());
 
@@ -19,10 +19,17 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.get('/', function (req, res) {
-  res.sendFile(__dirname + '/index.html');
-});
+
+// app.get('/', function (req, res) {
+//   res.sendFile(__dirname + '/index.html');
+// });
+
+app.use(express.static(path.join(__dirname,'public')))
 app.use('/', require('./import'));
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname,'public/index.html'));
+});
 
 //connection for Database
 mongoose.connect('mongodb://192.168.2.30/sekar-crud', {
@@ -253,5 +260,5 @@ exports.resendOtp = async function(req, res) {
 
 
 app.listen(3000, () => {
-	console.log("Server is listening on port 3000");
+	console.log("Server is listening on port" + port);
 });
