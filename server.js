@@ -24,12 +24,15 @@ app.use(bodyParser.json());
 //   res.sendFile(__dirname + '/index.html');
 // });
 
-app.use(express.static(path.join(__dirname,'public')))
-app.use('/', require('./import'));
+// app.use('/', require('./import'));
+
+app.use(express.static(path.join(__dirname,'public')));
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname,'public/index.html'));
 });
+
+
 
 //connection for Database
 mongoose.connect('mongodb://192.168.2.30/sekar-crud', {
@@ -259,6 +262,6 @@ exports.resendOtp = async function(req, res) {
 
 
 
-app.listen(3000, () => {
-	console.log("Server is listening on port" + port);
+app.listen(port, () => {
+	console.log("Server is listening on port " + port);
 });
