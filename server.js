@@ -31,7 +31,7 @@ app.use(cors())
 
 app.use(express.static(path.join(__dirname,'public')));
 
-app.get('*', function (req, res) {
+app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname,'public/index.html'));
 });
 
@@ -77,16 +77,31 @@ const fields = ['_id','name','phone','email','address','dob','qualification', 'c
 // 	})
 // });
 
-app.get('personalist',(req,res) =>{
+app.get('/read', (req,res,next)=>{
 	var query = {};
-		//this query for filter date wise users
-		if (req.query.from && req.query.to) {
-			query.createdAt = {
-				$gte: moment(new Date(req.query.from)).startOf('day').format(),
-				$lte: moment(new Date(req.query.to)).endOf('day').format()
-			}
+	//this query for filter date wise users
+	if (req.query.from && req.query.to) {
+		query.createdAt = {
+			$gte: moment(new Date(req.query.from)).startOf('day').format(),
+			$lte: moment(new Date(req.query.to)).endOf('day').format()
 		}
+	}
+	Personal.find(query).then((data) => {
+		res.send(data);
+	}).catch((err) => {
+		res.send(err)
+	})
 })
+// app.get('personalist',(req,res) =>{
+// 	var query = {};
+// 		//this query for filter date wise users
+// 		if (req.query.from && req.query.to) {
+// 			query.createdAt = {
+// 				$gte: moment(new Date(req.query.from)).startOf('day').format(),
+// 				$lte: moment(new Date(req.query.to)).endOf('day').format()
+// 			}
+// 		}
+// })
 
 app.use(function(req, res, next){
     res.header("Access-Control-Allow-Origin", "*");
@@ -94,11 +109,11 @@ app.use(function(req, res, next){
     next();
 });
 
-app.get('/test', (req, res) => {
-	res.status(200).json({
-	  message: 'Welcome to Project Support',
-	});
-  });
+// app.get('/test', (req, res) => {
+// 	res.status(200).json({
+// 	  message: 'Welcome to Project Support',
+// 	});
+//   });
   
 
 app.post('/personal', (req, res) => {
@@ -150,14 +165,14 @@ app.put('/personal/:id', (req, res) => {
 });
 
 
-// app.get('/personalist/:id', (req, res) => {
-// 	console.log("test");
-// 	Personal.findById(req.params.id).then((data) => {
-// 		res.send(data);
-// 	}).catch((err) => {
-// 		res.send(err)
-// 	})
-// });
+app.get('/personalist/:id', (req, res) => {
+	console.log("test");
+	Personal.findById(req.params.id).then((data) => {
+		res.send(data);
+	}).catch((err) => {
+		res.send(err)
+	})
+});
 
 app.delete('/personalist/:id', (req, res) => {
 	Personal.findByIdAndRemove(req.params.id).then((data) => {
