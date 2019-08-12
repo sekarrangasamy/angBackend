@@ -37,15 +37,15 @@ app.get('*', function (req, res) {
 
 
 
-//connection for Database
-// mongoose.connect('mongodb://sekar:Sekar123@ds045011.mlab.com:45011/sekarapp', {
-// 	useNewUrlParser: true
-// }).then(() => {
-// 	console.log("Successfully connected to the database");
-// }).catch(err => {
-// 	console.log('Could not connect to the database. Exiting now...');
-// 	process.exit();
-// });
+// connection for Database
+mongoose.connect('mongodb://sekar:Sekar123@ds045011.mlab.com:45011/sekarapp', {
+	useNewUrlParser: true
+}).then(() => {
+	console.log("Successfully connected to the database");
+}).catch(err => {
+	console.log('Could not connect to the database. Exiting now...');
+	process.exit();
+});
 const fields = ['_id','name','phone','email','address','dob','qualification', 'college', 'university', 'type', 'company'];
 
 // crud for personal
