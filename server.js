@@ -46,6 +46,7 @@ mongoose.connect('mongodb://sekar:Sekar123@ds045011.mlab.com:45011/sekarapp', {
 	console.log('Could not connect to the database. Exiting now...');
 	process.exit();
 });
+
 const fields = ['_id','name','phone','email','address','dob','qualification', 'college', 'university', 'type', 'company'];
 
 // crud for personal
