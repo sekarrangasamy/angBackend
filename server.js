@@ -166,7 +166,6 @@ app.put('/personal/:id', (req, res) => {
 
 
 app.get('/personalist/:id', (req, res) => {
-	console.log("test");
 	Personal.findById(req.params.id).then((data) => {
 		res.send(data);
 	}).catch((err) => {
